@@ -201,8 +201,8 @@ class TestListCommand:
         assert out.strip() == ""
 
     def test_list_multiple(self, tmp_path, capsys):
-        from showet.profile import ProfileStore
         from showet.cli.profile_cli import list_profiles
+        from showet.profile import ProfileStore
 
         store = ProfileStore(_profiles_dir(tmp_path))
         store.create("alpha", {"SHOWET_DEBUG": "1"})
@@ -231,8 +231,8 @@ class TestShowCommand:
         assert "60" in out
 
     def test_show_unknown_profile(self, tmp_path, capsys):
-        from showet.profile import ProfileStore
         from showet.cli.profile_cli import show_profile
+        from showet.profile import ProfileStore
 
         store = ProfileStore(_profiles_dir(tmp_path))
         ret = show_profile(store, "nope")
@@ -241,8 +241,8 @@ class TestShowCommand:
         assert "nope" in out.lower() or "not found" in out.lower()
 
     def test_show_masks_secrets(self, tmp_path, capsys):
-        from showet.profile import ProfileStore
         from showet.cli.profile_cli import show_profile
+        from showet.profile import ProfileStore
 
         store = ProfileStore(_profiles_dir(tmp_path))
         store.create("sec", {"SHOWET_API_KEY": "secret-value", "SHOWET_DEBUG": "1"})
@@ -267,8 +267,8 @@ class TestDeleteCommand:
         assert not store.profile_path("gone").exists()
 
     def test_delete_unknown_is_noop(self, tmp_path, capsys):
-        from showet.profile import ProfileStore
         from showet.cli.profile_cli import delete_profile
+        from showet.profile import ProfileStore
 
         store = ProfileStore(_profiles_dir(tmp_path))
         ret = delete_profile(store, "nope")
@@ -295,8 +295,8 @@ class TestRunCommand:
         assert out.strip() == "from-profile"
 
     def test_run_overrides_existing_var(self, tmp_path):
-        from showet.profile import ProfileStore
         from showet.cli.profile_cli import run_profile
+        from showet.profile import ProfileStore
 
         store = ProfileStore(_profiles_dir(tmp_path))
         store.create("override", {"SHOWET_DEBUG": "profile-value"})
@@ -306,16 +306,16 @@ class TestRunCommand:
         assert out.strip() == "profile-value"
 
     def test_run_unknown_profile_fails(self, tmp_path):
-        from showet.profile import ProfileStore
         from showet.cli.profile_cli import run_profile
+        from showet.profile import ProfileStore
 
         store = ProfileStore(_profiles_dir(tmp_path))
         rc, out, err = run_profile(store, "nope", [sys.executable, "-c", "print(1)"])
         assert rc != 0
 
     def test_run_passes_child_exit_code(self, tmp_path):
-        from showet.profile import ProfileStore
         from showet.cli.profile_cli import run_profile
+        from showet.profile import ProfileStore
 
         store = ProfileStore(_profiles_dir(tmp_path))
         store.create("x", {})
