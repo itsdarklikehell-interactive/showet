@@ -28,8 +28,8 @@ class Platform_Commodore_64(PlatformBase):
             frames: Number of frames (ignored by VICE).
             frame_delay: Frame delay (ignored by VICE).
         """
-        from pathlib import Path
         import subprocess
+        from pathlib import Path
 
         d64s = self.find_files_with_extension('d64')
         prgs = self.find_files_with_extension('prg')
