@@ -16,6 +16,6 @@ WORKDIR /app
 
 WORKDIR /config
 
-RUN chown -R abc:abc /config /showet
+RUN chown -R abc:abc /config /app
 
 EXPOSE 3000 3001 16261
