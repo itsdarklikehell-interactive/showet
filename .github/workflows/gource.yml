@@ -3,52 +3,21 @@ name: Gource visualization
 on:
   push:
     branches: [master]
+    paths-ignore:
+      - "gource.mp4"
+  pull_request:
+    branches: [master]
+    paths-ignore:
+      - "gource.mp4"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   gource:
-    runs-on: ubuntu-latest
+    uses: itsdarklikehell-interactive/ci-templates/.github/workflows/gource-reusable.yml@5d44fcd97f6ea8cf05ae6f0298fe84ac56829cba
     permissions:
       contents: write
-      actions: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5 # v4
-        with:
-          fetch-depth: 0
-
-      - name: Gource
-        uses: nbprojekt/gource-action@57256d303c5a9a5e72ed92ba13e3e83c5ec8b257 # v1.3.0
-        with:
-          gource_resolution: 1080p
-          gource_fps: 60
-          gource_filename_time: 3
-          gource_hide_items: 'mouse,date,filenames'
-
-      - name: Install ffmpeg (runner)
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
-
-      - name: Upscale + re-encode
-        run: |
-          ffmpeg -y -i ./gource/gource.mp4 \
-            -c:v libx264 -crf 19 -level 3.1 -preset slow -tune film \
-            -filter:v "scale=-1:720" -sws_flags lanczos \
-            -c:a aac -b:a 128k \
-            ./gource.mp4
-
-      - name: Upload video
-        uses: actions/upload-artifact@v5 # v4
-        with:
-          name: ${{ github.event.repository.name }}-gource
-          path: ./gource.mp4
-
-      - name: Commit gource video
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add gource.mp4 || true
-          git diff --staged --quiet || git commit -m "ci: update gource visualization (automated)"
-          git push
+      actions: read
+      pull-requests: write
