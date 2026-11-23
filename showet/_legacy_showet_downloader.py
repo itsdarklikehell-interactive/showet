@@ -122,7 +122,6 @@ def _unpack_archive(archive_path: Path, dest_dir: Path) -> None:
 
     # Clean up the original archive after unpacking
     try:
-        import shutil
         logger.info("Unpacking %s into %s", archive_path.name, dest_dir)
         cmd = handlers[ext]
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
