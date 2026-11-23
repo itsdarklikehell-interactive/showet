@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
 RUN git clone https://github.com/itsdarklikehell/showet.git /app
 
 WORKDIR /app
+# Keep top-level platform modules importable after switching to /config.
+ENV PYTHONPATH=/app
 # COPY . /app
 
 # RUN install.sh --update
@@ -16,6 +18,6 @@ WORKDIR /app
 
 WORKDIR /config
 
-RUN chown -R abc:abc /config /showet
+RUN chown -R abc:abc /config /app
 
 EXPOSE 3000 3001 16261

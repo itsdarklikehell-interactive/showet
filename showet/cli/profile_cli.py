@@ -15,14 +15,18 @@ from __future__ import annotations
 
 import argparse
 import sys
-from pathlib import Path
 
 from showet.profile import (
     ProfileStore,
     profiles_dir,
-    run_profile as _run_profile,
-    run_profile,  # re-export for test imports
 )
+from showet.profile import (
+    run_profile as _run_profile,
+)
+
+run_profile = _run_profile
+
+__all__ = ["delete_profile", "list_profiles", "run_profile", "show_profile"]
 
 # Re-export command handlers under the names the test suite imports.
 list_profiles = None  # type: ignore[assignment]
