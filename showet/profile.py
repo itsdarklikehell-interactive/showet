@@ -19,7 +19,8 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from showet.core.config import SHOWET_DIR
 
