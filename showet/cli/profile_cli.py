@@ -19,9 +19,10 @@ import sys
 from showet.profile import (
     ProfileStore,
     profiles_dir,
-    run_profile,  # re-export for test imports
     run_profile as _run_profile,
 )
+
+run_profile = _run_profile
 
 __all__ = ["delete_profile", "list_profiles", "run_profile", "show_profile"]
 
