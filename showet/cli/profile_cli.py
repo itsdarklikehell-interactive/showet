@@ -19,6 +19,8 @@ import sys
 from showet.profile import (
     ProfileStore,
     profiles_dir,
+)
+from showet.profile import (
     run_profile as _run_profile,
 )
 
